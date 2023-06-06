@@ -1,0 +1,201 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"Mega",
+				"MegaBlast-Coleco-Data"
+			],
+			[
+				"PLA",
+				"PLAY_IT"
+			]
+		]
+	},
+	"buffers":
+	[
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/C/Users/Tony Cruise/source/repos/MSX/Coleco/PGFTC/CH15/End/Coleco-Lib.ASM",
+		"/C/Personal/Bennetto/Bennetto/BENNETTO2.DMD",
+		"/Y/Customers/Michael Webb/Research/DragAndDropFileUploading.html",
+		"/C/Users/tcrui/Downloads/config.bin",
+		"/C/Personal/MSX/Coleco/Cavern.Fighter/Cavern-Fighter-Patterns2.ASM",
+		"/Y/Emulation/EA Titles/MegaBlast/MegaBlast.c",
+		"/C/Personal/MSX/Coleco/LMARG/EP6/MegaBlast-Coleco-Data.ASM",
+		"/C/Personal/MSX/NES/Meteor Swarm/sfx/song7.inc",
+		"/C/Personal/MSX/NES/Meteor Swarm/sfx/vol_envelopes.inc",
+		"/C/Personal/MSX/NES/Meteor Swarm/sfx/song8.inc",
+		"/C/Personal/MSX/NES/Meteor Swarm/sfx/song2.inc",
+		"/C/Personal/MSX/Coleco/MegaBlast/make.bat",
+		"/C/Personal/MSX/Coleco/MegaBlast/Coleco-Include.ASM",
+		"/Y/Emulation/EA Titles/MegaBlast/MegaBlastTitle.pp",
+		"/C/Personal/MSX/Coleco/Template/Template.asm",
+		"/C/Personal/MSX/Coleco/Template/Coleco-Lib.ASM",
+		"/C/Personal/MSX/Coleco/Template/Coleco-Include.ASM",
+		"/C/Personal/MSX/Coleco/Seaquest99/Coleco-Seaquest99.asm",
+		"/C/Personal/MSX/Coleco/Seaquest99/Seaquest-Coleco-Data.ASM",
+		"/C/Personal/MSX/Coleco/Seaquest99/Coleco-Lib.ASM",
+		"/C/Personal/MSX/Coleco/Seaquest99/Coleco-Include.ASM",
+		"/C/Users/Tony Cruise/Documents/sample.s",
+		"/C/Personal/MSX/MSX/METEOR.ASM",
+		"/C/Personal/MSX/Coleco/Seaquest99/emul.bat",
+		"/C/Users/m023685/AppData/Roaming/Sublime Text 3/Packages/z80asm/run.bat",
+		"/C/Personal/MSX/Coleco/Seaquest99/Seaquest99.sublime-project",
+		"/C/Users/m023685/AppData/Roaming/Sublime Text 3/Packages/z80asm/z80asm.sublime-build",
+		"/C/Users/m023685/AppData/Roaming/Sublime Text 3/Packages/z80asm/build.bat",
+		"/C/Personal/MSX/Coleco/Seaquest99/make.bat"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"sheets":
+			[
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "MusicDemo.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 251.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
