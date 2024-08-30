@@ -3,18 +3,16 @@
 ; MegaBlast - Coleco ver 1.00 (C) Electric Adventures 2020
 ;
 ;****************************************************************
-FNAME "MEGABLAST.ROM"
-cpu z80
-;
+
 ; Include Coleco defined values
-include "Coleco-Include.ASM"
+    include "Coleco-Include.ASM"
 
 PATSIZE:   EQU 71
 SPRITECOUNT: EQU 11
 
 ;
 ; Set ROM header
-           ORG        8000h
+    ORG        8000h
 ;** CARTRIDGE SOFTWARE POINTERS 8000H **
 ;        --------------------------------------------
 
@@ -71,6 +69,7 @@ START:
     ; Set screen mode 2,2
 	CALL SETSCREEN2
 
+    CALL CONTROLLER_INIT
     ;Enable both joysticks, buttons, keypads
     LD	HL,09b9bh
     LD	(CONTROLLER_BUFFER),HL
@@ -334,7 +333,7 @@ MAINLAYOUT:
 ; Include external data files
 ;**********************************************************************
 
-include "Coleco-MegaBlast-Tilset.ASM"
+    include "Coleco-MegaBlast-Tilset.ASM"
 
 ;**************************************************************************************************
 ; Sound and music data area
@@ -359,15 +358,11 @@ SoundAddrs:
 ; Standard Libraries
 ;**************************************************************************************************
 
-include "Coleco-Lib.ASM"
-
-END:	EQU $
+    include "Coleco-Lib.ASM"
 
 ;**************************************************************************************************
 ; RAM Definitions
 ;**************************************************************************************************
-
-ORG RAMSTART
 
 ; Sound Data area - 7 songs
 SoundDataArea: DS Len_SoundDataArea

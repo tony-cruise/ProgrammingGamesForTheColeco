@@ -3,11 +3,9 @@
 ; MegaBlast - Coleco ver 1.00 (C) Electric Adventures 2014
 ;
 ;****************************************************************
-FNAME "MEGABLAST.ROM"
-cpu z80
-;
+
 ; Include Coleco defined values
-include "Coleco-Include.ASM"
+    include "Coleco-Include.ASM"
 
 PATSIZE:   EQU 71
 SPRITECOUNT: EQU 11
@@ -71,6 +69,7 @@ START:
     ; Set screen mode 2,2
 	CALL SETSCREEN2
 
+    CALL CONTROLLER_INIT
     ;Enable both joysticks, buttons, keypads
     LD	HL,09b9bh
     LD	(CONTROLLER_BUFFER),HL
@@ -250,7 +249,7 @@ FIRE_PLAYER_BULLET:
 	; fire bullet
 	; set Y based on player ship
     LD A,(SPRTBL)
-    SUB A,6
+    SUB 6
     LD (SPRTBL+8),A
     ; set X based on player ship
     LD A,(SPRTBL+1)
@@ -426,7 +425,7 @@ ME5:
     ; enemy has reached the bottom of the screen
     ; check whether the enemy has hit the player ship
     LD A,(SPRTBL+1)
-    SUB A,(IY+5) ; width of enemy from enemy data table
+    SUB (IY+5) ; width of enemy from enemy data table
     CP (IX+1)
     JR NC, ME7
     ; x + it's width is larger than the players X
@@ -874,7 +873,7 @@ MAINLAYOUT:
 
 
 SPDATA:
-include "Coleco-MegaBlast-Tilset.ASM"
+    include "Coleco-MegaBlast-Tilset.ASM"
 
 ;**************************************************************************************************
 ; Sound and music data area
@@ -899,15 +898,11 @@ SoundAddrs:
 ; Standard Libraries
 ;**************************************************************************************************
 
-include "Coleco-Lib.ASM"
-
-END:	EQU $
+    include "Coleco-Lib.ASM"
 
 ;**************************************************************************************************
 ; RAM Definitions
 ;**************************************************************************************************
-
-ORG RAMSTART
 
 LEVEL:       DS 1
 LIVES:       DS 1

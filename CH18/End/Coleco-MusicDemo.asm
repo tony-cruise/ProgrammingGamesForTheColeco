@@ -1,13 +1,11 @@
 ;****************************************************************
 ;
-; Music Demo - MSX ver 1.00 (C) Electric Adventures 2019
+; Music Demo - Coleco ver 1.00 (C) Electric Adventures 2019
 ;
 ;****************************************************************
-FNAME "MusicDemo.ROM"
-cpu z80
-;
+
 ; Include Coleco defined values
-include "Coleco-Include.ASM"
+  include "Coleco-Include.ASM"
 
 PATSIZE:   EQU 73
 SPRITECOUNT: EQU 1
@@ -70,6 +68,7 @@ START:
 
   CALL INITRAM
 
+  CALL CONTROLLER_INIT
   ;Enable both joysticks, buttons, keypads
   LD	HL,09b9bh
   LD	(CONTROLLER_BUFFER),HL
@@ -442,21 +441,17 @@ OUTPUT_TEXT:
 ; Include external data files
 ;**************************************************************************************************
 
-include "Coleco-MusicDemo-Patterns.ASM"
+  include "Coleco-MusicDemo-Patterns.ASM"
 
 ;**************************************************************************************************
 ; Standard Libraries
 ;**************************************************************************************************
 
-include "Coleco-Lib.ASM"
-
-END:	EQU $
+  include "Coleco-Lib.ASM"
 
 ;**************************************************************************************************
 ; RAM Definitions
 ;**************************************************************************************************
-
-ORG RAMSTART
 
 CURRENT_CHANNEL: DS 1
 TEMP: DS 1

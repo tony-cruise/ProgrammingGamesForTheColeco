@@ -1,13 +1,10 @@
 ;****************************************************************
 ;
-; TMS Demo - MSX ver 1.00 (C) Electric Adventures 2019
+; TMS Demo - Coleco ver 1.00 (C) Electric Adventures 2019
 ;
 ;****************************************************************
-FNAME "TMSDemo.ROM"
-cpu z80
-;
 ; Include Coleco defined values
-include "Coleco-Include.ASM"
+  include "Coleco-Include.ASM"
 
 PATSIZE:   EQU 73
 SPRITECOUNT: EQU 1
@@ -73,6 +70,7 @@ START:
 
   CALL INITRAM
 
+  CALL CONTROLLER_INIT
   ;Enable both joysticks, buttons, keypads
   LD	HL,09b9bh
   LD	(CONTROLLER_BUFFER),HL
@@ -297,13 +295,13 @@ OUTPUT_TEXT:
 
 ; Title text
 TITLE_TEXT:
-db 30,23,29,0,14,41,49,51,63,255
+  db 30,23,29,0,14,41,49,51,63,255
 
 ;**************************************************************************************************
 ; Include external data files
 ;**************************************************************************************************
 
-include "Coleco-TMSDemo-Patterns.ASM"
+  include "Coleco-TMSDemo-Patterns.ASM"
 
 
 ;**************************************************************************************************
@@ -317,137 +315,137 @@ bounce:
     DW 0000h
 
 sample:
-db 080h,02Eh,031h,7
-db 080h,053h,031h,7
-db 080h,053h,031h,7
-db 080h,094h,031h,7
-db 080h,094h,031h,7
-db 080h,08Fh,030h,7
-db 080h,0F0h,030h,7
-db 080h,02Eh,031h,7
-db 080h,01Dh,031h,7
-db 080h,02Eh,031h,7
-db 080h,0F0h,030h,7
-db 080h,067h,031h,7
-db 080h,01Dh,031h,7
-db 080h,01Dh,031h,7
-db 080h,07Dh,031h,7
-db 080h,0FEh,030h,7
-db 080h,00Dh,031h,7
-db 080h,0E2h,030h,7
-db 080h,00Dh,031h,7
-db 080h,07Dh,031h,7
-db 080h,053h,031h,7
-db 080h,02Eh,031h,7
-db 080h,0E2h,030h,7
-db 080h,040h,031h,7
-db 080h,067h,031h,7
-db 080h,094h,031h,7
-db 080h,040h,031h,7
-db 080h,040h,031h,7
-db 080h,094h,031h,7
-db 080h,094h,031h,7
-db 080h,01Dh,031h,7
-db 080h,01Dh,031h,7
-db 080h,053h,031h,7
-db 080h,0FEh,030h,7
-db 080h,00Dh,031h,7
-db 080h,0ABh,031h,7
-db 080h,02Eh,031h,7
-db 080h,0FEh,030h,7
-db 080h,094h,031h,7
-db 080h,053h,031h,7
-db 080h,0E2h,030h,7
-db 080h,0FEh,030h,7
-db 080h,040h,031h,7
-db 080h,0F0h,030h,7
-db 080h,053h,031h,7
-db 080h,0E2h,030h,7
-db 080h,0E2h,030h,7
-db 080h,01Dh,031h,7
-db 080h,094h,031h,7
-db 080h,0E2h,030h,7
-db 080h,094h,031h,7
-db 080h,07Dh,031h,7
-db 080h,094h,031h,7
-db 080h,00Dh,031h,7
-db 080h,0FEh,030h,7
-db 080h,07Dh,031h,7
-db 080h,094h,031h,7
-db 080h,0ABh,031h,7
-db 080h,0ABh,031h,7
-db 080h,040h,031h,7
-db 080h,067h,031h,7
-db 080h,067h,031h,7
-db 080h,02Eh,031h,7
-db 080h,07Dh,031h,7
-db 090h
+  db 080h,02Eh,031h,7
+  db 080h,053h,031h,7
+  db 080h,053h,031h,7
+  db 080h,094h,031h,7
+  db 080h,094h,031h,7
+  db 080h,08Fh,030h,7
+  db 080h,0F0h,030h,7
+  db 080h,02Eh,031h,7
+  db 080h,01Dh,031h,7
+  db 080h,02Eh,031h,7
+  db 080h,0F0h,030h,7
+  db 080h,067h,031h,7
+  db 080h,01Dh,031h,7
+  db 080h,01Dh,031h,7
+  db 080h,07Dh,031h,7
+  db 080h,0FEh,030h,7
+  db 080h,00Dh,031h,7
+  db 080h,0E2h,030h,7
+  db 080h,00Dh,031h,7
+  db 080h,07Dh,031h,7
+  db 080h,053h,031h,7
+  db 080h,02Eh,031h,7
+  db 080h,0E2h,030h,7
+  db 080h,040h,031h,7
+  db 080h,067h,031h,7
+  db 080h,094h,031h,7
+  db 080h,040h,031h,7
+  db 080h,040h,031h,7
+  db 080h,094h,031h,7
+  db 080h,094h,031h,7
+  db 080h,01Dh,031h,7
+  db 080h,01Dh,031h,7
+  db 080h,053h,031h,7
+  db 080h,0FEh,030h,7
+  db 080h,00Dh,031h,7
+  db 080h,0ABh,031h,7
+  db 080h,02Eh,031h,7
+  db 080h,0FEh,030h,7
+  db 080h,094h,031h,7
+  db 080h,053h,031h,7
+  db 080h,0E2h,030h,7
+  db 080h,0FEh,030h,7
+  db 080h,040h,031h,7
+  db 080h,0F0h,030h,7
+  db 080h,053h,031h,7
+  db 080h,0E2h,030h,7
+  db 080h,0E2h,030h,7
+  db 080h,01Dh,031h,7
+  db 080h,094h,031h,7
+  db 080h,0E2h,030h,7
+  db 080h,094h,031h,7
+  db 080h,07Dh,031h,7
+  db 080h,094h,031h,7
+  db 080h,00Dh,031h,7
+  db 080h,0FEh,030h,7
+  db 080h,07Dh,031h,7
+  db 080h,094h,031h,7
+  db 080h,0ABh,031h,7
+  db 080h,0ABh,031h,7
+  db 080h,040h,031h,7
+  db 080h,067h,031h,7
+  db 080h,067h,031h,7
+  db 080h,02Eh,031h,7
+  db 080h,07Dh,031h,7
+  db 090h
 
 sample2:
-db 080h,057h,033h,6
-db 080h,087h,030h,6
-db 080h,087h,030h,6
-db 080h,087h,030h,6
-db 080h,057h,033h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,01bh,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,08fh,030h,6
-db 080h,08fh,030h,6
-db 080h,08fh,030h,6
-db 080h,057h,033h,6
-db 080h,01bh,032h,6
-db 080h,01bh,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,057h,033h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,081h,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,057h,033h,6
-db 080h,081h,032h,6
-db 080h,081h,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,07fh,030h,6
-db 080h,07fh,030h,6
-db 080h,07fh,030h,6
-db 080h,057h,033h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,01bh,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,07fh,030h,6
-db 080h,07fh,030h,6
-db 080h,07fh,030h,6
-db 080h,057h,033h,6
-db 080h,03bh,032h,6
-db 080h,03bh,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,057h,033h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,081h,032h,6
-db 080h,001h,030h,6 ;BLANK Note
-db 080h,057h,033h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,097h,030h,6
-db 080h,057h,033h,6
-db 080h,081h,032h,6
-db 080h,081h,032h,6
-db 090h
+  db 080h,057h,033h,6
+  db 080h,087h,030h,6
+  db 080h,087h,030h,6
+  db 080h,087h,030h,6
+  db 080h,057h,033h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,01bh,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,08fh,030h,6
+  db 080h,08fh,030h,6
+  db 080h,08fh,030h,6
+  db 080h,057h,033h,6
+  db 080h,01bh,032h,6
+  db 080h,01bh,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,057h,033h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,081h,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,057h,033h,6
+  db 080h,081h,032h,6
+  db 080h,081h,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,07fh,030h,6
+  db 080h,07fh,030h,6
+  db 080h,07fh,030h,6
+  db 080h,057h,033h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,01bh,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,07fh,030h,6
+  db 080h,07fh,030h,6
+  db 080h,07fh,030h,6
+  db 080h,057h,033h,6
+  db 080h,03bh,032h,6
+  db 080h,03bh,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,057h,033h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,081h,032h,6
+  db 080h,001h,030h,6 ;BLANK Note
+  db 080h,057h,033h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,097h,030h,6
+  db 080h,057h,033h,6
+  db 080h,081h,032h,6
+  db 080h,081h,032h,6
+  db 090h
 
 ;**************************************************************************************************
 ; Sound settings
@@ -464,15 +462,11 @@ SoundAddrs:
 ; Standard Libraries
 ;**************************************************************************************************
 
-include "Coleco-Lib.ASM"
-
-END:	EQU $
+  include "Coleco-Lib.ASM"
 
 ;**************************************************************************************************
 ; RAM Definitions
 ;**************************************************************************************************
-
-ORG RAMSTART
 
 WAIT: ds 1
 LASTPATTERN1: ds 1

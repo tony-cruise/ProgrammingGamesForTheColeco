@@ -26,7 +26,7 @@ ENABLE_NMI:
 
 ENABLE_SGM_MEMORY:
     LD A,00000001bh
-    OUT(53h),A
+    OUT (53h),A
     RET
 
 ; Set the name table to default values
@@ -137,12 +137,12 @@ unRLEWBtoVRAM:
   ex de,hl
 
 ANALYZE:
-  ld    A,[HL]         ; get byte
+  ld    A,(HL)         ; get byte
   cp    RLECONTROL
   jr    NZ,WriteByte   ; if raw
 
   inc   HL             ; get next byte
-  ld    A,[HL]
+  ld    A,(HL)
   or    A
   jr    Z,WriteCONTROL ;if A=0 then write one $80  ($80 $0)
   cp    0FFh            ;if A=$FF ($80 $FF)
@@ -152,10 +152,10 @@ ANALYZE:
   inc   A              ;2 to 255
   ld    B,A
   inc   HL
-  ld    A,[HL]         ;get value
+  ld    A,(HL)         ;get value
 
 doRLE:
-  out   [DATA_PORT],A    ;write in VRAM
+  out   (DATA_PORT),A    ;write in VRAM
   nop
   nop
   djnz  doRLE
@@ -167,7 +167,7 @@ WriteCONTROL:
   ld    A,RLECONTROL  ;write CONTROL value
 
 WriteByte:
-  out   [DATA_PORT],A   ;write in VRAM
+  out   (DATA_PORT),A   ;write in VRAM
   ;nop
   inc   HL
   jr    ANALYZE
@@ -572,7 +572,7 @@ NMI:
 		;music, processing timers, sprite motion processing
 
 ; Set origin in Coleco RAM area
-ORG 07000h ; fit common items before the BIOS RAM usage area
+    ORG 07000h ; fit common items before the BIOS RAM usage area
 
 TickTimer:    DS 1 ; Signal that 3 frames has elapsed
 HalfSecTimer: DS 1 ; Signal that 1/2 second has elapsed
@@ -582,7 +582,7 @@ SEED:	      DS 4
 CONTROLLER_BUFFER:	DS 12	;Pointer to hand controller input area
 MOVDLY:       DS 10      ; Up to 10 movement timers
 
-ORG 07030h ; avoid Coleco BIOS RAM usage area
+    ORG 07030h ; avoid Coleco BIOS RAM usage area
 
 ; Sprite positions
 SPRTBL:       DS 80h
@@ -591,7 +591,5 @@ TIMER_TABLE:	    DS 16	;Pointer to timers table (16 timers)
 TIMER_DATA_BLOCK:	DS 58	;Pointer to timers table for long timers
                             ;4 bytes * 16 longer than 3 sec timers
 VDU_HOOK: DS 4 ; NMI VDU Delayed writes hook
-
-RAMSTART: EQU $ ; Setup where game specific values can start
 
 ; RAM Usage: 30h+80h+1+16+58+4 = 255 bytes

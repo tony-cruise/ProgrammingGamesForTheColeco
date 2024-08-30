@@ -1,6 +1,8 @@
-;
-; Coleco SUBROUTINES
-;
+;****************************************************************
+; Coleco SUBROUTINES ver 1.02 (C) Electric Adventures 2020
+;****************************************************************
+
+; Set address called inside NMI routine
 ; HL = Hook Address
 SET_VDU_HOOK:
    LD A,0cdh
@@ -10,6 +12,7 @@ SET_VDU_HOOK:
    LD (VDU_HOOK+3),A
    RET
 
+; Disable the generation of NMI calls
 DISABLE_NMI:
 	ld      a,(073c4h)
 	and     0dfh
@@ -18,16 +21,12 @@ DNMI1:
 	ld      b,1
 	jp      01fd9h
 
+; Enable the generationo of NMI calls
 ENABLE_NMI:
 	ld      a,(073c4h)
 	or      020h
 	call    DNMI1
 	jp      01fdch
-
-ENABLE_SGM_MEMORY:
-    LD A,00000001bh
-    OUT(53h),A
-    RET
 
 ; Set the name table to default values
 ; DE = VRAM Offset
@@ -87,7 +86,7 @@ RLE2V3:
     outi
     jr      z,RLE2V0
     jp      RLE2V3
-;
+
 ; Uncompress RLE data into RAM
 ; HL = Source data
 ; DE = Destination
@@ -115,63 +114,6 @@ RLE2R2:
     ldir
     jr      RLE2R0
 
-;===========================================================================
-; unRLEWBtoVRAM v1.1 (26 jun 2014)
-; Function : Unpack WB RLE to VRAM
-;
-; Input    : HL - source RAM RLE data address
-;            DE - target VRAM address
-;
-; $80 nn dd            ; run of n consecutive identical bytes ($1>$FE), value dd
-; $80 $0               ; for one $80 value
-; $80 $FF              ; end of data block
-; <any other value>    ; raw data
-;===========================================================================
-
-RLECONTROL: EQU   080h
-
-unRLEWBtoVRAM:
-  ; set VRAM addr
-  ex de,hl
-  call SETWRT
-  ex de,hl
-
-ANALYZE:
-  ld    A,[HL]         ; get byte
-  cp    RLECONTROL
-  jr    NZ,WriteByte   ; if raw
-
-  inc   HL             ; get next byte
-  ld    A,[HL]
-  or    A
-  jr    Z,WriteCONTROL ;if A=0 then write one $80  ($80 $0)
-  cp    0FFh            ;if A=$FF ($80 $FF)
-  ret   Z              ;then exit
-
-  ;$80 nn dd
-  inc   A              ;2 to 255
-  ld    B,A
-  inc   HL
-  ld    A,[HL]         ;get value
-
-doRLE:
-  out   [DATA_PORT],A    ;write in VRAM
-  nop
-  nop
-  djnz  doRLE
-
-  inc   HL
-  jr    ANALYZE
-
-WriteCONTROL:
-  ld    A,RLECONTROL  ;write CONTROL value
-
-WriteByte:
-  out   [DATA_PORT],A   ;write in VRAM
-  ;nop
-  inc   HL
-  jr    ANALYZE
-
 ; Write to VDP, port in B, value in C
 WRTVDP:
     DI
@@ -189,7 +131,7 @@ WRTVDP:
     LD (HL),A
     POP HL
     RET
-;
+
 ; Set write to Video Ram
 ; HL = VRAM Address
 SETWRT:
@@ -214,21 +156,7 @@ SETRD:
     OUT (CTRL_PORT),A
     EI
     RET
-;
-; Read ^[STOP], Z FLAG SET IF TRUE
-BREAKX:
-    RET ; disable
-    LD A,22
-    OUT (0AAh),A
-    IN A,(0A9h)
-    BIT 1,A
-    RET NZ
-    LD A,23
-    OUT (0AAh),A
-    IN A,(0A9h)
-    BIT 4,A
-    RET
-;
+
 ; Load a block of memory to VRAM
 ; HL = VRAM Address
 ; DE = RAM Address
@@ -245,7 +173,7 @@ LLOOP:
     CP 0
     JR NZ,LLOOP
     RET
-;
+
 ; Fill a section of VRAM with value in A
 ; HL = VRAM Address
 ; BC = Length
@@ -261,8 +189,11 @@ FLOOP:
     CP 0
     JR NZ,FLOOP
     RET
-;
+
 ; Write Sprite positions to VRAM
+; - writes sprites in reverse order every 2nd screen refresh
+; - this allows for eight sprites per line, with flickering
+; - only when there are five or more sprites on a line
 SPRWRT:
     LD A,(SPRORDER)
     BIT 0,A
@@ -281,29 +212,29 @@ SW1:
     LD (SPRORDER),A
     LD HL,VRAM_SPRATTR
     CALL SETWRT
-    LD HL,SPRTBL+80h-4
-    LD B,32
-    LD DE,7
+    LD IX,SPRTBL+80h-4
+    LD C,32
 SW2:
-    LD A,(HL)
-    INC HL
+    LD A,(IX+0)
     OUT (DATA_PORT),A
-    LD A,(HL)
-    INC HL
+    LD A,(IX+1)
     OUT (DATA_PORT),A
-    LD A,(HL)
-    INC HL
+    LD A,(IX+2)
     OUT (DATA_PORT),A
-    LD A,(HL)
+    LD A,(IX+3)
     OUT (DATA_PORT),A
+    DEC IX
+    DEC IX
+    DEC IX
+    DEC IX
+    DEC C
     XOR A
-    SBC HL,DE
-    DJNZ SW2
+    CP C
+    JR NZ,SW2
     RET
-;
-; Setup Screen 2,2
+
+; Setup Screen 2,2 - Interrupts are disabled
 SETSCREEN2:
-;    CALL MODE_1
     LD BC,0002h	;Reg 0: Mode 2
     CALL WRITE_REGISTER
     LD BC,0206h        ; Name table 1800h
@@ -321,26 +252,7 @@ SETSCREEN2:
     LD BC,01c2h	;Reg 1: Mode 2, 16k, no interrupts, 16x16 sprites
     CALL WRITE_REGISTER
     RET
-    ; 16KB VIDEO MEMORY, 16x16 NORMAL SPRITES, AND TURN ON SCREEN
-    ;ld  bc,01e2h; $01c2 ; $01e2 ; = AND ENABLE NMI EXECUTION
-    ;call WRITE_REGISTER
-    ;RET ; // coleco screen mode set
-;	LD HL,0101h
-;	LD (BAKCLR),HL
-;	LD IX,005Fh
-;	LD IY,0
-;	LD A,2
-;	CALL BANKCL
-;	LD A,(RG1SAV)
-;	OR 2
-;	LD B,A
-;	LD C,1
-;	lD IX,0047h
-;	LD IY,0
-;	CALL BANKCL
-;	RET
 
-;
 ; Test for the press of a joystick button (0 or 1)
 ; A = 255 - fire button pressed
 JOYTST:
@@ -356,71 +268,36 @@ JOYTST:
     RET Z
     LD A,255
     RET
-    ; disable MSX logic
-    DI
-    LD A,0
-    LD IX,00D8h
-    LD IY,0
-    CALL 001Ch
-    PUSH AF
-    LD A,1
-    CALL 001Ch
-    LD B,A
-    POP AF
-    OR B
-    EI
-    RET
 
+; Test for a press of a keypad button
 JOYPAD:
     CALL POLLER
     LD A,(CONTROLLER_BUFFER+KEYPAD1)
     RET
 ;
-; Test for the direction of joystick 0 or 1
+; Test for the direction of joystick 0
 ; Result: A
 JOYDIR:
        CALL POLLER
        LD A,(CONTROLLER_BUFFER+JOY1)
        RET
-;    RET ; disable
-;    DI
-;    LD A,1
-;    LD IX,00D5h
-;    LD IY,0
-;    CALL 001Ch
-;    PUSH AF
-;    LD A,1
-;    CALL 001Ch
-;    LD B,A
-;    POP AF
-;    OR B
-;    EI
-;    RET
 ;
+; Play a sound, protects the calling routine from common registers being changed
+; B = Sound to play
 SOUND:
-    RET ; disable sounds for the moment
-;    LD A,(HL)
-;    CP 255
-;    RET Z
-;    OUT (SND1),A
-;    INC HL
-;    CP 7
-;    LD A,(HL)
-;    JR NZ,SNDLP1
-;    PUSH BC
-;    LD B,A
-;    IN A,(SND3)
-;    AND 192
-;    ADD A,B
-;    POP BC
-;SNDLP1:
-;    OUT (SND2),A
-;    INC HL
-;    JR SOUND
-;
+    PUSH IX
+    PUSH IY
+    PUSH HL
+    PUSH DE
+    CALL PLAY_IT
+    POP DE
+    POP HL
+    POP IY
+    POP IX
+    RET
+
 ; Output a character to the screen nametable
 ; (HL) contains the character to output
-;
 PRINTIT:
     XOR A ; clear A
     RLD   ; rotate left out of (HL) into A
@@ -433,21 +310,22 @@ PRINTIT:
     DEC A
     RLD
     RET
-;
+
 ; Clear the sprites from the screen (set Y=209)
 CLEARSPRITES:
 	LD B,80h
 	LD DE,SPRTBL
-CSPR1:
+CS1:
     LD A,209
 	LD (DE),A
 	INC DE
-	;DEC B
-	;LD A,B
-	;CP 0
-	DJNZ CSPR1
+	DEC B
+	LD A,B
+	CP 0
+	JR NZ,CS1
+	LD (SPRORDER),A
 	RET
-;
+
 ; Clear the VDP Pattern table (clears screen)
 CLEARPAT:
 	LD HL,VRAM_NAME
@@ -455,7 +333,7 @@ CLEARPAT:
 	XOR A
 	CALL FILVRM
     RET
-;
+
 ; Create and enable standard timers
 CREATE_TIMERS:
 	LD	HL,(AMERICA)	;How long a second is
@@ -476,7 +354,7 @@ CREATE_TIMERS:
 	CALL	REQUEST_SIGNAL
 	LD	(TickTimer),A		;Happens once per tick
     RET
-;
+
 ;   Seed Random numbers
 ;   Seed in HL
 SEED_RANDOM:
@@ -485,10 +363,9 @@ SEED_RANDOM:
     RL L
     LD (SEED+2),HL
     RET
-;
+
 ;   Generate a random number, based on the initial Seed
 ;   value.
-;
 RND:
     PUSH HL
 	PUSH BC
@@ -514,14 +391,18 @@ RLP2:
 	LD (SEED),HL
 	LD (SEED+2),DE
 	LD A,E
-	;OR H
+	OR H
 	POP DE
 	POP BC
 	POP HL
 	RET
-;
+
 ; NMI routine
-;
+; - updates a time counter,
+; - plays any songs
+; - writes in memory sprite table to VDU
+; - calls user defined hook - for other writes
+; - update the time counters
 NMI:
 	PUSH	AF
 	PUSH	BC
@@ -572,7 +453,7 @@ NMI:
 		;music, processing timers, sprite motion processing
 
 ; Set origin in Coleco RAM area
-ORG 07000h ; fit common items before the BIOS RAM usage area
+    ORG 07000h ; fit common items before the BIOS RAM usage area
 
 TickTimer:    DS 1 ; Signal that 3 frames has elapsed
 HalfSecTimer: DS 1 ; Signal that 1/2 second has elapsed
@@ -582,7 +463,7 @@ SEED:	      DS 4
 CONTROLLER_BUFFER:	DS 12	;Pointer to hand controller input area
 MOVDLY:       DS 10      ; Up to 10 movement timers
 
-ORG 07030h ; avoid Coleco BIOS RAM usage area
+    ORG 07030h ; avoid Coleco BIOS RAM usage area
 
 ; Sprite positions
 SPRTBL:       DS 80h
@@ -592,6 +473,3 @@ TIMER_DATA_BLOCK:	DS 58	;Pointer to timers table for long timers
                             ;4 bytes * 16 longer than 3 sec timers
 VDU_HOOK: DS 4 ; NMI VDU Delayed writes hook
 
-RAMSTART: EQU $ ; Setup where game specific values can start
-
-; RAM Usage: 30h+80h+1+16+58+4 = 255 bytes

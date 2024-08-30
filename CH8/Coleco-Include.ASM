@@ -5,8 +5,8 @@
 ; Coleco Ports
 ;
 ; Video Display Processor
-DATA_PORT: EQU 0beh ;
-CTRL_PORT: EQU 0bfh ;
+DATA_PORT:	EQU 0beh ;
+CTRL_PORT:	EQU 0bfh ;
 ;
 ; Sound Generator
 SND_PORT:  EQU 0ffh ; write only
@@ -160,3 +160,4 @@ VRAM_NAME:          EQU $1800
 VRAM_SPRATTR:       EQU $1B00
 VRAM_COLOR:         EQU $2000
 VRAM_SPRGEN:        EQU $3800
+

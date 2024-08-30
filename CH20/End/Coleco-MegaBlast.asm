@@ -3,11 +3,9 @@
 ; MegaBlast - Coleco ver 1.00 (C) Electric Adventures 2014
 ;
 ;****************************************************************
-FNAME "MEGABLAST.ROM"
-cpu z80
-;
+
 ; Include Coleco defined values
-include "Coleco-Include.ASM"
+    include "Coleco-Include.ASM"
 
 PATSIZE:   EQU 71
 SPRITECOUNT: EQU 11
@@ -71,6 +69,7 @@ START:
     ; Set screen mode 2,2
 	CALL SETSCREEN2
 
+    CALL CONTROLLER_INIT
     ;Enable both joysticks, buttons, keypads
     LD	HL,09b9bh
     LD	(CONTROLLER_BUFFER),HL
@@ -246,7 +245,7 @@ FIRE_PLAYER_BULLET:
     ; fire bullet
     ; set Y based on player ship
     LD A,(SPRTBL)
-    SUB A,6
+    SUB 6
     LD (SPRTBL+8),A
     ; set X based on player ship
     LD A,(SPRTBL+1)
@@ -452,7 +451,7 @@ ME5:
     ; enemy has reached the bottom of the screen
     ; check whether the enemy has hit the player ship
     LD A,(SPRTBL+1)
-    SUB A,(IY+5) ; width of enemy from enemy data table
+    SUB (IY+5) ; width of enemy from enemy data table
     CP (IX+1)
     JR NC, ME7
     ; x + it's width is larger than the players X
@@ -930,146 +929,146 @@ MAINLAYOUT:
 ; Include external data files
 ;**************************************************************************************************
 
-include "Coleco-MegaBlast-Patterns.ASM"
+    include "Coleco-MegaBlast-Tileset.ASM"
 
 ;**************************************************************************************************
 ; Sound and music data area
 ;**************************************************************************************************
 
 sfx_ZAP1_1:
-DB $41,$77,$30,$10,$11,$20
-DB $50
+    DB $41,$77,$30,$10,$11,$20
+    DB $50
 
 sfx_EXPLOSION1_0:
-DB $00,$00,$37,30
-DB $10
+    DB $00,$00,$37,30
+    DB $10
 sfx_EXPLOSION1_3:
-DB $c0,$e7,$f3,1
-DB $c0,$d1,$f3,1
-DB $c0,$91,$f3,1
-DB $c0,$63,$f3,1
-DB $c0,$45,$f3,1
-DB $c0,$2f,$f3,1
-DB $c0,$0b,$f3,1
-DB $c0,$a3,$f2,1
-DB $c0,$67,$f2,1
-DB $c0,$e3,$f1,1
-DB $c0,$99,$f1,1
-DB $c0,$49,$f1,1
-DB $c0,$25,$f1,1
-DB $c0,$27,$f1,1
-DB $c0,$c7,$f0,16
-DB $d0
+    DB $c0,$e7,$f3,1
+    DB $c0,$d1,$f3,1
+    DB $c0,$91,$f3,1
+    DB $c0,$63,$f3,1
+    DB $c0,$45,$f3,1
+    DB $c0,$2f,$f3,1
+    DB $c0,$0b,$f3,1
+    DB $c0,$a3,$f2,1
+    DB $c0,$67,$f2,1
+    DB $c0,$e3,$f1,1
+    DB $c0,$99,$f1,1
+    DB $c0,$49,$f1,1
+    DB $c0,$25,$f1,1
+    DB $c0,$27,$f1,1
+    DB $c0,$c7,$f0,16
+    DB $d0
 
 sfx_EXPLOSION2_0:
-DB $00,$00,$37,120
-DB $10
+    DB $00,$00,$37,120
+    DB $10
 sfx_EXPLOSION2_3:
-DB $c0,$e7,$f3,1
-DB $c0,$d1,$f3,1
-DB $c0,$91,$f3,1
-DB $c0,$63,$f3,1
-DB $c0,$45,$f3,1
-DB $c0,$2f,$f3,1
-DB $c0,$0b,$f3,1
-DB $c0,$a3,$f2,1
-DB $c0,$67,$f2,1
-DB $c0,$e3,$f1,1
-DB $c0,$99,$f1,1
-DB $c0,$49,$f1,1
-DB $c0,$25,$f1,1
-DB $c0,$27,$f1,1
-DB $c0,$c5,$f0,1
-DB $c0,$95,$f0,1
-DB $c0,$57,$f0,1
-DB $c0,$53,$f0,1
-DB $c0,$51,$f0,1
-DB $c0,$4f,$f0,1
-DB $c0,$4b,$f0,3
-DB $c0,$45,$f0,1
-DB $c0,$43,$f0,2
-DB $c0,$3d,$f0,2
-DB $c0,$35,$f0,1
-DB $c0,$39,$f0,1
-DB $c0,$3d,$f0,1
-DB $c0,$3f,$f0,1
-DB $c0,$41,$f0,1
-DB $c0,$45,$f0,1
-DB $c0,$4d,$f0,1
-DB $c0,$61,$f0,1
-DB $c0,$71,$f0,1
-DB $c0,$8b,$f0,1
-DB $c0,$a1,$f0,1
-DB $c0,$cd,$f0,1
-DB $c0,$f5,$f0,1
-DB $c0,$ad,$f1,1
-DB $c0,$b3,$f1,1
-DB $c0,$ad,$f1,1
-DB $c0,$a7,$f1,1
-DB $c0,$9b,$f1,1
-DB $c0,$8d,$f1,1
-DB $c0,$7f,$f1,1
-DB $c0,$71,$f1,1
-DB $c0,$5f,$f1,1
-DB $c0,$4f,$f1,1
-DB $c0,$39,$f1,1
-DB $c0,$13,$f1,1
-DB $c0,$4b,$f0,7
-DB $c0,$7f,$f0,1
-DB $c0,$97,$f0,1
-DB $c0,$b3,$f0,1
-DB $c0,$cf,$f0,1
-DB $c0,$ff,$f0,1
-DB $c0,$4b,$f1,1
-DB $c0,$87,$f1,1
-DB $c0,$a3,$f1,1
-DB $c0,$b5,$f1,1
-DB $c0,$c7,$f1,1
-DB $c0,$33,$f2,1
-DB $c0,$61,$f2,1
-DB $c0,$9b,$f2,1
-DB $d0
+    DB $c0,$e7,$f3,1
+    DB $c0,$d1,$f3,1
+    DB $c0,$91,$f3,1
+    DB $c0,$63,$f3,1
+    DB $c0,$45,$f3,1
+    DB $c0,$2f,$f3,1
+    DB $c0,$0b,$f3,1
+    DB $c0,$a3,$f2,1
+    DB $c0,$67,$f2,1
+    DB $c0,$e3,$f1,1
+    DB $c0,$99,$f1,1
+    DB $c0,$49,$f1,1
+    DB $c0,$25,$f1,1
+    DB $c0,$27,$f1,1
+    DB $c0,$c5,$f0,1
+    DB $c0,$95,$f0,1
+    DB $c0,$57,$f0,1
+    DB $c0,$53,$f0,1
+    DB $c0,$51,$f0,1
+    DB $c0,$4f,$f0,1
+    DB $c0,$4b,$f0,3
+    DB $c0,$45,$f0,1
+    DB $c0,$43,$f0,2
+    DB $c0,$3d,$f0,2
+    DB $c0,$35,$f0,1
+    DB $c0,$39,$f0,1
+    DB $c0,$3d,$f0,1
+    DB $c0,$3f,$f0,1
+    DB $c0,$41,$f0,1
+    DB $c0,$45,$f0,1
+    DB $c0,$4d,$f0,1
+    DB $c0,$61,$f0,1
+    DB $c0,$71,$f0,1
+    DB $c0,$8b,$f0,1
+    DB $c0,$a1,$f0,1
+    DB $c0,$cd,$f0,1
+    DB $c0,$f5,$f0,1
+    DB $c0,$ad,$f1,1
+    DB $c0,$b3,$f1,1
+    DB $c0,$ad,$f1,1
+    DB $c0,$a7,$f1,1
+    DB $c0,$9b,$f1,1
+    DB $c0,$8d,$f1,1
+    DB $c0,$7f,$f1,1
+    DB $c0,$71,$f1,1
+    DB $c0,$5f,$f1,1
+    DB $c0,$4f,$f1,1
+    DB $c0,$39,$f1,1
+    DB $c0,$13,$f1,1
+    DB $c0,$4b,$f0,7
+    DB $c0,$7f,$f0,1
+    DB $c0,$97,$f0,1
+    DB $c0,$b3,$f0,1
+    DB $c0,$cf,$f0,1
+    DB $c0,$ff,$f0,1
+    DB $c0,$4b,$f1,1
+    DB $c0,$87,$f1,1
+    DB $c0,$a3,$f1,1
+    DB $c0,$b5,$f1,1
+    DB $c0,$c7,$f1,1
+    DB $c0,$33,$f2,1
+    DB $c0,$61,$f2,1
+    DB $c0,$9b,$f2,1
+    DB $d0
 
 sfx_EXPLOSION3_0:
-DB $00,$00,$37,42
-DB $10
+    DB $00,$00,$37,42
+    DB $10
 sfx_EXPLOSION3_3:
-DB $c0,$e7,$f3,1
-DB $c0,$d1,$f3,1
-DB $c0,$91,$f3,1
-DB $c0,$55,$f1,1
-DB $c0,$45,$f3,1
-DB $c0,$59,$f1,1
-DB $c0,$53,$f1,1
-DB $c0,$59,$f3,1
-DB $c0,$45,$f1,2
-DB $c0,$59,$f3,1
-DB $c0,$45,$f1,1
-DB $c0,$65,$f3,1
-DB $c0,$61,$f3,1
-DB $c0,$53,$f0,1
-DB $c0,$51,$f0,1
-DB $c0,$5b,$f3,1
-DB $c0,$4f,$f0,1
-DB $c0,$7b,$f3,1
-DB $c0,$77,$f3,1
-DB $c0,$53,$f0,1
-DB $c0,$47,$f0,1
-DB $c0,$77,$f3,2
-DB $c0,$47,$f0,2
-DB $c0,$7d,$f3,2
-DB $c0,$55,$f0,2
-DB $c0,$71,$f3,1
-DB $c0,$55,$f0,1
-DB $c0,$53,$f0,1
-DB $c0,$6d,$f3,1
-DB $c0,$63,$f3,1
-DB $c0,$5f,$f1,2
-DB $c0,$67,$f3,1
-DB $c0,$5f,$f1,2
-DB $c0,$91,$f3,1
-DB $c0,$9d,$f3,1
-DB $d0
+    DB $c0,$e7,$f3,1
+    DB $c0,$d1,$f3,1
+    DB $c0,$91,$f3,1
+    DB $c0,$55,$f1,1
+    DB $c0,$45,$f3,1
+    DB $c0,$59,$f1,1
+    DB $c0,$53,$f1,1
+    DB $c0,$59,$f3,1
+    DB $c0,$45,$f1,2
+    DB $c0,$59,$f3,1
+    DB $c0,$45,$f1,1
+    DB $c0,$65,$f3,1
+    DB $c0,$61,$f3,1
+    DB $c0,$53,$f0,1
+    DB $c0,$51,$f0,1
+    DB $c0,$5b,$f3,1
+    DB $c0,$4f,$f0,1
+    DB $c0,$7b,$f3,1
+    DB $c0,$77,$f3,1
+    DB $c0,$53,$f0,1
+    DB $c0,$47,$f0,1
+    DB $c0,$77,$f3,2
+    DB $c0,$47,$f0,2
+    DB $c0,$7d,$f3,2
+    DB $c0,$55,$f0,2
+    DB $c0,$71,$f3,1
+    DB $c0,$55,$f0,1
+    DB $c0,$53,$f0,1
+    DB $c0,$6d,$f3,1
+    DB $c0,$63,$f3,1
+    DB $c0,$5f,$f1,2
+    DB $c0,$67,$f3,1
+    DB $c0,$5f,$f1,2
+    DB $c0,$91,$f3,1
+    DB $c0,$9d,$f3,1
+    DB $d0
 
 
 bass1a:
@@ -1292,15 +1291,11 @@ SoundAddrs:
 ; Standard Libraries
 ;**************************************************************************************************
 
-include "Coleco-Lib.ASM"
-
-END:	EQU $
+    include "Coleco-Lib.ASM"
 
 ;**************************************************************************************************
 ; RAM Definitions
 ;**************************************************************************************************
-
-ORG RAMSTART
 
 LEVEL:	     DS 1
 LIVES:       DS 1

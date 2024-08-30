@@ -3,15 +3,15 @@
 ; EA Game Template - Coleco ver 1.02 (C) Electric Adventures 2020
 ;
 ;****************************************************************
-FNAME "TEMPLATE.ROM"
-cpu z80
+;FNAME "TEMPLATE.ROM"
+;cpu z80
 ;
 ; Include Coleco defined values
-include "Coleco-Include.ASM"
+    include "Coleco-Include.ASM"
 
 ;
 ; Set ROM header
-           ORG        8000h
+    ORG        8000h
 ;** CARTRIDGE SOFTWARE POINTERS 8000H **
 ;        --------------------------------------------
 
@@ -68,6 +68,7 @@ START:
     ; Set screen mode 2,2 (16x16 sprites)
     CALL SETSCREEN2
 
+    CALL CONTROLLER_INIT
     ;Enable both joysticks, buttons, keypads
     LD	HL,09b9bh
     LD	(CONTROLLER_BUFFER),HL
@@ -330,15 +331,11 @@ SoundAddrs:
 ; Standard Libraries
 ;**************************************************************************************************
 
-include "Coleco-Lib.ASM"
-
-END:	EQU $
+    include "Coleco-Lib.ASM"
 
 ;**************************************************************************************************
 ; RAM Definitions
 ;**************************************************************************************************
-
-ORG RAMSTART
 
 BALL:       DS 2
 
