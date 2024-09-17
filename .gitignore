@@ -2,3 +2,7 @@
 *.sym
 *.rom
 *.out
+*.class
+*.dll
+*.exe
+
