@@ -7,5 +7,6 @@ echo Building JAR file.
 
 jar --create --file CVSoundFX.jar --main-class net.electricadventures.CVSoundFX -C build .
 
-native-image -jar CVSoundFX.jar
+native-image --no-fallback -H:ConfigurationFileDirectories=config -Djava.awt.headless=false -J-Xmx7G -jar CVSoundFX.jar CVSoundFX
+
 echo Done.

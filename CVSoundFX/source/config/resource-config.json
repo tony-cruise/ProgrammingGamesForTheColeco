@@ -1,0 +1,50 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QMETA-INF/services/java.awt.im.spi.InputMethodDescriptor\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/javax.sound.sampled.spi.MixerProvider\\E"
+  }, {
+    "pattern":"java.desktop:\\Qcom/sun/swing/internal/plaf/basic/resources/basic_en.properties\\E"
+  }, {
+    "pattern":"java.desktop:\\Qcom/sun/swing/internal/plaf/basic/resources/basic_en_AU.properties\\E"
+  }, {
+    "pattern":"java.desktop:\\Qcom/sun/swing/internal/plaf/metal/resources/metal_en.properties\\E"
+  }, {
+    "pattern":"java.desktop:\\Qcom/sun/swing/internal/plaf/metal/resources/metal_en_AU.properties\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/computer.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/directory.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/file.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/floppy.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/hardDrive.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/homeFolder.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/newFolder.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/question.png\\E"
+  }, {
+    "pattern":"java.desktop:\\Qjavax/swing/plaf/metal/icons/ocean/upFolder.gif\\E"
+  }, {
+    "pattern":"java.desktop:\\Qsun/awt/resources/awt_en.properties\\E"
+  }, {
+    "pattern":"java.desktop:\\Qsun/awt/resources/awt_en_AU.properties\\E"
+  }]},
+  "bundles":[{
+    "name":"com.sun.swing.internal.plaf.basic.resources.basic",
+    "locales":["en-AU"]
+  }, {
+    "name":"com.sun.swing.internal.plaf.metal.resources.metal",
+    "locales":["en-AU"]
+  }, {
+    "name":"sun.awt.resources.awt",
+    "locales":["en-AU"]
+  }]
+}
